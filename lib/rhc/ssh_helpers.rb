@@ -460,19 +460,12 @@ module RHC
         if RHC::Helpers.windows?
           # looks for ssh.exe from git-for-windows or plink.exe from PuTTY, either on path or specific locations
           guessing_locations <<
-            discover_windows_executables do |base|
-              from_path = ENV['PATH'].split(File::PATH_SEPARATOR).map {|p| p + File::ALT_SEPARATOR + "ssh.exe" }
-              from_path + [
-                'ssh.exe',
+            discover_windows_executables(['ssh.exe', 'plink.exe', 'putty.exe']) do |base|
+              [
                 "#{base}\\Git\\bin\\ssh.exe",
                 "#{base}\\Git\\usr\\bin\\ssh.exe",
-                "#{base}\\ssh.exe",
-                'plink.exe',
                 "#{base}\\PuTTY\\plink.exe",
-                "#{base}\\plink.exe",
-                'putty.exe',
                 "#{base}\\PuTTY\\putty.exe",
-                "#{base}\\putty.exe"
               ]
             end
         end

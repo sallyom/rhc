@@ -534,7 +534,7 @@ module RHC
       #:nocov:
     end
 
-    def discover_windows_executables(&block)
+    def discover_windows_executables(path_names=[], &block)
       #:nocov:
       if RHC::Helpers.windows?
 
@@ -576,6 +576,16 @@ module RHC
               guessing_locations << group[i - 1]
             end
           end
+        end
+
+        unless path_names.empty?
+          search_paths = ENV['PATH'].split(File::PATH_SEPARATOR) + base_path.flatten.uniq
+          path_sets = search_paths.map do |path_prefix|
+            path_names.map {|suffix| path_prefix + File::ALT_SEPARATOR + suffix }
+          end
+
+          guessing_locations << path_sets.flatten.uniq
+          guessing_locations << path_names
         end
 
         guessing_locations.flatten.uniq.select {|cmd| File.exist?(cmd) && File.executable?(cmd)}
