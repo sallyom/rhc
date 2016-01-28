@@ -538,7 +538,7 @@ module RHC
       #:nocov:
       if RHC::Helpers.windows?
 
-        base_path = []
+        base_path = ENV['PATH'].split(File::PATH_SEPARATOR).map {|p| p + File::ALT_SEPARATOR
         guessing_locations = []
 
         # Look for the base path int the ProgramFiles env var...
