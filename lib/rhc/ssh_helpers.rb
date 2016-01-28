@@ -461,8 +461,7 @@ module RHC
           # looks for ssh.exe from git-for-windows or plink.exe from PuTTY, either on path or specific locations
           guessing_locations <<
             discover_windows_executables do |base|
-              from_path = ENV['PATH'].split(File::PATH_SEPARATOR).map {|p| p + File::ALT_SEPARATOR + "ssh.exe" }
-              from_path + [
+              [
                 'ssh.exe',
                 "#{base}\\Git\\bin\\ssh.exe",
                 "#{base}\\Git\\usr\\bin\\ssh.exe",
